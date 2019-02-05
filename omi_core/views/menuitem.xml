@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="menu_omi_root" name="OMI Config" parent="base.menu_administration" sequence="5"/>
+        <menuitem id="menu_omi_config_settings" action="omi_config_settings_action" name="Configuration" parent="menu_omi_root" sequence="10"/>
+        <menuitem id="menu_omi_fb_permission" action="omi_fb_permission_act" name="Permission" parent="menu_omi_root" sequence="20"/>
+
+    </data>
+</odoo>
