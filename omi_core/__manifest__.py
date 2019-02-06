@@ -25,7 +25,7 @@
     'auto_install': False,
     'application': False,
     'installable': True,
-    'external_dependencies': {'python' : ['facebook_sdk']}
+    'external_dependencies': {'python' : ['facebook']}
     # 'pre_init_hook': 'pre_init_hook',
     # 'post_init_hook': 'post_init_hook',
     # 'uninstall_hook': 'uninstall_hook',
