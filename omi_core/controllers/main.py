@@ -12,6 +12,10 @@ VERIFY_TOKEN = '1234567890qwertyuiopasdfghjklzxcvbnm'
 
 
 class OMICore(http.Controller):
+
+    def _show_message(self, sender_id, recipient_id, message_data):
+        print(sender_id, recipient_id, message_data)
+
     @http.route('/config-save-token', type='http', auth="user", website=True)
     @fragment_to_query_string
     def config_save_token(self, access_token=False, **kwargs):
@@ -36,12 +40,25 @@ class OMICore(http.Controller):
                 messaging = event['messaging']
                 for message in messaging:
                     if message.get('message'):
+                        sender_id = message['sender']['id']
+                        recipient_id = message['recipient']['id']
+                        message_data = message['message']
+
+                        self._show_message(sender_id, recipient_id, message_data)
+
                         # Facebook Messenger ID for user so we know where to send response back to
-                        recipient_id = message['sender']['id']
-                        if message['message'].get('text'):
-                            print(message['message'].get('text'))
-                        # if user sends us a GIF, photo, video, or any other non-text item
-                        if message['message'].get('attachments'):
-                            print(message['message'].get('attachments'))
+                        # sender_id = message['sender']['id']
+                        # if message['message'].get('text'):
+                        #     text = message['message']['text']
+                        #     print(text)
+                        #     show_message(sender_id, message['message'])
+                        #     # ResUsers = request.env['res.users']
+                        #     # author_id = ResUsers.search([('psid', '=', sender_id)]) or ResUsers.create_user_from_psid(sender_id)
+                        #     #
+                        #     # channel = request.env['mail.channel'].get_channel_from_author(author_id)
+                        #     # channel.sudo().with_context(mail_create_nosubscribe=True).message_post(author_id=author_id, email_from=False, body=text, message_type='comment', subtype='mail.mt_comment', content_subtype='plaintext')
+                        # # if user sends us a GIF, photo, video, or any other non-text item
+                        # if message['message'].get('attachments'):
+                        #     print(message['message'].get('attachments'))
             return "Message Processed"
 
