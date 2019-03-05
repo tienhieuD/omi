@@ -8,7 +8,7 @@ class FacebookUtils(models.AbstractModel):
 
     @api.model
     def _get_access_token(self):
-        return self.env['ir.config_parameter'].sudo().get_params('omi.fb_access_token')
+        return self.env['ir.config_parameter'].sudo().get_param('omi.fb_access_token')
 
     def _get_page_access_token(self, access_token, page_id):
         graph = facebook.GraphAPI(access_token=access_token, version=3.1)

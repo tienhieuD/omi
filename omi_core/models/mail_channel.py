@@ -22,8 +22,9 @@ class MailChannel(models.Model):
         self = self.sudo()
         channel = self.search([('channel_partner_ids', '=', partner_id), ('channel_type', '=', 'fb')], limit=1)
         if not channel:
+            # TODO: Mặc định đang lấy partner gửi tin đến và Admin root (ID 3)
             channel = self.with_context(mail_create_nosubscribe=False).create({
-                'channel_partner_ids': [(6, 0, [partner_id, 4])],
+                'channel_partner_ids': [(6, 0, [partner_id, 3])],
                 'channel_type': 'fb',
                 'name': self.env['res.partner'].browse(partner_id).display_name,
                 'public': 'private',

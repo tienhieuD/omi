@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 import json
-from datetime import datetime
+
+from odoo.addons.auth_oauth.controllers.main import fragment_to_query_string
 
 from odoo import http
 from odoo.http import request
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
-from odoo.addons.auth_oauth.controllers.main import fragment_to_query_string
 
 ACCESS_TOKEN = '1234567890qwertyuiopasdfghjklzxcvbnm'
 VERIFY_TOKEN = '1234567890qwertyuiopasdfghjklzxcvbnm'
@@ -14,7 +13,17 @@ VERIFY_TOKEN = '1234567890qwertyuiopasdfghjklzxcvbnm'
 class OMICore(http.Controller):
 
     def _show_message(self, sender_id, recipient_id, message_data):
-        print(sender_id, recipient_id, message_data)
+        partner = request.env['res.partner'].sudo().get_create_partner_from_psid(psid=sender_id, page_id=recipient_id)
+        channel = request.env['mail.channel'].sudo().get_create_channel_from_author(partner_id=partner.id)
+        message_text = message_data.get('text')
+
+        # Post message show chat pop-up
+        message = channel.sudo()\
+            .with_context(mail_create_nosubscribe=True)\
+            .message_post(author_id=partner.id, email_from=False, body=message_text, message_type='comment',
+                          subtype='mail.mt_comment', content_subtype='plaintext')
+        request.env['bus.bus'].sendone((request._cr.dbname, 'res.partner', partner.id), channel.channel_info())
+        print(partner, channel, message_text, message)
 
     @http.route('/config-save-token', type='http', auth="user", website=True)
     @fragment_to_query_string
