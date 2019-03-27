@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import facebook
+from pymessenger.bot import Bot
 from odoo import api, fields, models, tools
 
 
@@ -10,7 +11,8 @@ class FacebookUtils(models.AbstractModel):
     def _get_access_token(self):
         return self.env['ir.config_parameter'].sudo().get_param('omi.fb_access_token')
 
-    def _get_page_access_token(self, access_token, page_id):
+    def _get_page_access_token(self, page_id):
+        access_token = self._get_access_token()
         graph = facebook.GraphAPI(access_token=access_token, version=3.1)
         accounts_data = graph.get_connections('me', 'accounts')
         for page in accounts_data['data']:
@@ -18,7 +20,13 @@ class FacebookUtils(models.AbstractModel):
                 return page['access_token']
 
     def get_sender_info(self, page_id, sender_id):
-        access_token = self._get_access_token()
-        page_access_token = self._get_page_access_token(access_token=access_token, page_id=page_id)
+        page_access_token = self._get_page_access_token(page_id)
         graph_page = facebook.GraphAPI(access_token=page_access_token, version=3.1)
         return graph_page.get_object(id=sender_id)
+
+    def send_message(self, partner, text):
+        recipient_id = partner.psid
+        page_id = partner.page_id
+        access_token = self._get_page_access_token(page_id)
+        Bot(access_token).send_text_message(recipient_id, text)
+        return True

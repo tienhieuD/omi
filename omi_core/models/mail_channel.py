@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models
-
+from odoo.tools import html2plaintext
 
 class MailChannel(models.Model):
     _inherit = 'mail.channel'
@@ -31,3 +31,17 @@ class MailChannel(models.Model):
                 'email_send': False,
             })
         return channel
+
+    @api.multi
+    @api.returns('self', lambda value: value.id)
+    def message_post(self, **kwargs):
+        """ Gửi tin từ odoo -> facebook
+            TODO: if sender in [list_of_fb_manager]  // trường hợp nhiều fbmanager cho 1 kênh """
+        res = super(MailChannel, self).message_post(**kwargs)
+        if not res.author_id.psid:  # không phải người dùng facebook
+            send_message = self.env['omi.facebook.utils'].send_message
+            recipients = self.channel_partner_ids - res.author_id
+            for recipient in recipients:
+                send_message(partner=recipient, text=html2plaintext(res.body))
+        return res
+

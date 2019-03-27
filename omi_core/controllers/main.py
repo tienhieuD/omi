@@ -22,8 +22,6 @@ class OMICore(http.Controller):
             .with_context(mail_create_nosubscribe=True)\
             .message_post(author_id=partner.id, email_from=False, body=message_text, message_type='comment',
                           subtype='mail.mt_comment', content_subtype='plaintext')
-        request.env['bus.bus'].sendone((request._cr.dbname, 'res.partner', partner.id), channel.channel_info())
-        print(partner, channel, message_text, message)
 
     @http.route('/config-save-token', type='http', auth="user", website=True)
     @fragment_to_query_string
