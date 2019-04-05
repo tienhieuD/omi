@@ -1,7 +1,7 @@
 {
     'name': "OMI Core",
-    'version': '0.1',
-    'author': 'Lorem',
+    'author': 'Odoo Community Association (OCA)',
+    'version': '11.0.1.0.0',
     'maintainer': 'Lorem',
     'website': "http://google.com",
     'license': 'LGPL-3',

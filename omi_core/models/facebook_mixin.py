@@ -33,6 +33,7 @@ class FacebookUtils(models.AbstractModel):
     def send_message(self, partner, text):
         recipient_id = partner.psid
         page_id = partner.page_id
-        access_token = self._get_page_access_token(page_id)
-        Bot(access_token).send_text_message(recipient_id, text)
+        if page_id and recipient_id:
+            access_token = self._get_page_access_token(page_id)
+            Bot(access_token).send_text_message(recipient_id, text)
         return True
