@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
 import json
-
-from odoo.addons.auth_oauth.controllers.main import fragment_to_query_string
 
 from odoo import http
 from odoo.http import request
+from odoo.addons.auth_oauth.controllers.main import fragment_to_query_string
 
 ACCESS_TOKEN = '1234567890qwertyuiopasdfghjklzxcvbnm'
 VERIFY_TOKEN = '1234567890qwertyuiopasdfghjklzxcvbnm'
@@ -22,6 +20,7 @@ class OMICore(http.Controller):
             .with_context(mail_create_nosubscribe=True)\
             .message_post(author_id=partner.id, email_from=False, body=message_text, message_type='comment',
                           subtype='mail.mt_comment', content_subtype='plaintext')
+        return message.id
 
     @http.route('/config-save-token', type='http', auth="user", website=True)
     @fragment_to_query_string
@@ -68,4 +67,3 @@ class OMICore(http.Controller):
                         # if message['message'].get('attachments'):
                         #     print(message['message'].get('attachments'))
             return "Message Processed"
-

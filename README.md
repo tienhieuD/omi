@@ -1,2 +1,0 @@
-# omi
-omi hjhj

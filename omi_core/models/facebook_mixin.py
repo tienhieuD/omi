@@ -1,7 +1,13 @@
-# -*- coding: utf-8 -*-
-import facebook
-from pymessenger.bot import Bot
-from odoo import api, fields, models, tools
+from odoo import api, models
+
+import logging
+_logger = logging.getLogger(__name__)
+
+try:
+    import facebook
+    from pymessenger.bot import Bot
+except ImportError as err:
+    _logger.debug(err)
 
 
 class FacebookUtils(models.AbstractModel):

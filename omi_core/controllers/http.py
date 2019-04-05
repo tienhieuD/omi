@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-import logging
 from odoo.http import Response, WebRequest
 from odoo.service import model as service_model
 
+import logging
 _logger = logging.getLogger(__name__)
 
 

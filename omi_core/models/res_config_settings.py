@@ -1,7 +1,13 @@
-# -*- coding: utf-8 -*-
-import facebook
 from odoo import api, fields, models, _
 from odoo.exceptions import MissingError
+
+import logging
+_logger = logging.getLogger(__name__)
+
+try:
+    import facebook
+except ImportError as err:
+    _logger.debug(err)
 
 
 class ResConfigSettings(models.TransientModel):

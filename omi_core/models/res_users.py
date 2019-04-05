@@ -1,8 +1,11 @@
-# -*- coding: utf-8 -*-
-from odoo import api, fields, models
-
 import base64
 import requests
+
+from odoo import api, fields, models
+
+import logging
+_logger = logging.getLogger(__name__)
+
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
@@ -19,13 +22,25 @@ class ResPartner(models.Model):
             Không có thì tạo mới...
         """
         partner = self.search([('psid', '=', psid), ('page_id', '=', page_id)], limit=1)
-        print("Search partner: %s" % partner)
-        if partner: return partner
+
+        if partner:
+            return partner
 
         FacebookUtils = self.env['omi.facebook.utils']
         user_info = FacebookUtils.get_sender_info(page_id=page_id, sender_id=psid)
         user_name = user_info['first_name'] + ' ' + user_info['last_name']
         image = self.get_as_base64(user_info['profile_pic'])
-        partner = self.create({'name': user_name, 'psid': psid, 'page_id': page_id, 'image': image})
-        return partner
 
+        partner = self.create({
+            'name': user_name,
+            'psid': psid,
+            'page_id': page_id,
+            'image': image
+        })
+
+        _logger.info(
+            "Search partner psid(%s) and page_id(%s) with no result, create partner %s(%s)",
+            psid, page_id, user_name, partner.id
+        )
+
+        return partner
