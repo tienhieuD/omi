@@ -28,7 +28,7 @@
 
                                     <p>
                                         <label for="fb_access_token" class="col-xs-3 col-md-3 o_light_label"/>
-                                        <field name="fb_access_token" class="oe_inline" readonly="1" style="word-wrap:break-word;"/>
+                                        <field name="fb_access_token" class="oe_inline" readonly="0" style="word-wrap:break-word;"/>
                                         <button name="get_facebook_access_token" type="object" string="Get Access"/>
                                     </p>
                                 </div>

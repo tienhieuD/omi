@@ -11,6 +11,7 @@
     'depends': ['base', 'crm', 'sale', 'mail', 'im_livechat', 'crm_livechat'],
     'data': [
         'security/ir.model.access.csv',
+        'data/omi_fb_permission.xml',
         'views/omi_fb_permission_view.xml',
         'views/res_config_settings_view.xml',
         'views/menuitem.xml',

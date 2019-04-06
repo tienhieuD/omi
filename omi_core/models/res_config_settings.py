@@ -45,10 +45,16 @@ class ResConfigSettings(models.TransientModel):
 
     @api.multi
     def get_facebook_access_token(self):
+        self.execute()
         get_param = self.env['ir.config_parameter'].sudo().get_param
-        app_id = self.fb_app_id
-        canvas_url = 'https://localhost/config-save-token'  # TODO: when has https, replace by: get_param('web.base.url', default='')
+
+        base_url = 'http://localhost'  # get_param('web.base.url', 'http://localhost')
+        https_url = base_url.replace("http://", "https://")
+        canvas_url = https_url + "/config-save-token"
+
         perms = get_param('omi.fb_permission', '').split(',')
+
+        app_id = self.fb_app_id
 
         if app_id and canvas_url and perms:
             graph = facebook.GraphAPI(version=3.1)

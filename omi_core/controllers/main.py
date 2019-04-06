@@ -4,6 +4,9 @@ from odoo import http
 from odoo.http import request
 from odoo.addons.auth_oauth.controllers.main import fragment_to_query_string
 
+import logging
+_logger = logging.getLogger(__name__)
+
 ACCESS_TOKEN = '1234567890qwertyuiopasdfghjklzxcvbnm'
 VERIFY_TOKEN = '1234567890qwertyuiopasdfghjklzxcvbnm'
 
@@ -20,6 +23,8 @@ class OMICore(http.Controller):
             .with_context(mail_create_nosubscribe=True)\
             .message_post(author_id=partner.id, email_from=False, body=message_text, message_type='comment',
                           subtype='mail.mt_comment', content_subtype='plaintext')
+
+        _logger.info("Sender(%s) PageID(%s) Message(%s)" % (sender_id, recipient_id, message_data))
         return message.id
 
     @http.route('/config-save-token', type='http', auth="user", website=True)
