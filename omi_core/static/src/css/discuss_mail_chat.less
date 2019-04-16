@@ -1,0 +1,198 @@
+.btn-icon-no-bg {
+    border: none;
+	background-color: transparent;
+	font-size: 20px;
+	padding: 2px 8px;
+	outline: none !important;
+	border-radius: 0;
+	height: 100%;
+}
+.draft a { /*border-left-color: #555487;*/ }
+.sent a { border-left-color: #d32f2f!important }
+.cancel a { border-left-color: #9e9e9e!important; }
+.sale a { border-left-color: #1565c0!important }
+.done a { border-left-color: #388e3c!important }
+
+.w0 {
+    width:0!important;
+}
+
+.bl0 {
+    border-left:0!important;
+}
+
+.o_mail_chat {
+
+    * {
+        transition: 0.05s;
+    }
+
+    .o_mail_chat_content {
+        padding-right: 80px;
+        padding-top: 32px;
+
+        &.omi_shrink_from_the_right {
+            padding-right: 480px;
+            .omi_mail_chat_sidebar_right {
+                width: 480px;
+                .omi_right_sidebar_content {
+                    width: 400px;
+                    overflow: hidden;
+                }
+            }
+        }
+
+        .omi_header_mail_chat {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 32px;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #cdcdcd;
+
+            .omi_group_button_left {
+                padding: 1.5px 0 0 5px;
+
+                button {
+                    height: 28px;
+                }
+            }
+
+            .omi_group_button_right {
+                position: absolute;
+                right: 80px;
+                top: 0;
+
+                button {
+
+                }
+            }
+
+        }
+
+        .omi_mail_chat_sidebar_right {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 80px;
+            height: 100%;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            border-left: 1px solid #cdcdcd;
+            z-index: 1;
+
+            .omi_navigation {
+                width: 80px;
+                border-right: 1px solid #cdcdcd;
+                height: 100%;
+                position: relative;
+
+                .omi_group_button_top {
+                    margin: 2px;
+
+                    button {
+                        width: 74px;
+                        height: 32px;
+                        margin-bottom: 2px;
+                        white-space: normal;
+                        padding: 0;
+                    }
+                }
+
+                .omi_group_button_bottom {
+
+                }
+            }
+
+            .omi_right_sidebar_content {
+                width: 0;
+                height: 100%;
+                position: absolute;
+                right: 0;
+                top: 0;
+                overflow: hidden;
+
+                .omi_search {
+                    position: absolute;
+                    width: 355px;
+                    height: 30px;
+                    border: 2px solid #ddd;
+                    padding: 0 10px;
+                    border-left: 5px solid #ddd;
+                    border-right: 3px solid #ddd;
+                    z-index: 1;
+                }
+
+                .omi_task_bar {
+                    width: 26px;
+                    float: right;
+
+                    .close {
+                        padding: 5px;
+                    }
+                }
+
+                .omi_floating_screen {
+                    height: 100%;
+                    header {
+                        position: fixed;
+                    }
+                    main {
+                        overflow-y: auto;
+                        height: 100%;
+                        width: 372px;
+                        padding: 30px 0;
+
+                        * {
+                            margin: 0;
+                            padding: 0;
+                        }
+
+                        .omi_list_group {
+                            display: block;
+                            width: 100%;
+                            padding: 5px;
+                            background-color: #e1e1e1;
+                            font-weight: bold;
+                            text-align: center;
+
+                            &.omi_order_list li a {
+                                border-left:0;
+                            }
+                        }
+
+                        .omi_order_list {
+                            list-style: none;
+
+                            li {
+                                display: table;
+                                width: 100%;
+
+                                a {
+                                    display: block;
+                                    border: 1px solid #dbdbdb;
+                                    padding: 10px;
+                                    border-left: 5px solid;
+
+                                    .oi_left_side,
+                                    .oi_right_side {
+                                        display: table-cell;
+                                        vertical-align: top;
+                                    }
+
+                                    .oi_left_side {
+                                        width: 20%;
+                                        padding-right: 16px;
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

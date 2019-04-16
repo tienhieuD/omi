@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="omi_assets_backend" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" type="text/less" href="/omi_core/static/src/css/discuss_mail_chat.less"/>
+                <script type="text/javascript" src="/omi_core/static/src/js/chat_client_action.js"/>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

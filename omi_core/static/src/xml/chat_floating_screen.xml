@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="omi_core.quotation_floating_screen">
+        <header>
+            <button class="btn btn-sm btn-primary js_button_new" data-model="sale.order" data-action="sale.action_quotations">New quotation</button>
+        </header>
+        <main>
+            <ul class="omi_order_list">
+                <li t-foreach="widget.data" t-as="order" t-att-class="order.state">
+                    <a class="omi_order_item js_record_item" t-att-data-id="order.id" data-model="sale.order" href="javascript:;">
+                        <div class="oi_left_side">
+                            <h1><t t-esc="order.name"/></h1>
+                            <b class="omi_total"><t t-esc="order.amount_total"/>đ</b>
+
+                        </div>
+                        <div class="oi_right_side">
+                            <ul>
+                                <li><b>Status:</b> <t t-esc="order.state"/></li>
+                                <li><small class="omi_order_date"><i><t t-esc="order.confirmation_date || ''"/></i></small></li>
+                                <t t-foreach="order.order_line" t-as="line">
+                                    <li><t t-esc="line.name"/> x<t t-esc="line.product_uom_qty"/></li>
+                                </t>
+                            </ul>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </main>
+        <footer>
+
+        </footer>
+    </t>
+
+    <t t-name="omi_core.product_floating_screen">
+        <header>
+        </header>
+        <main>
+            <ul class="omi_order_list">
+                <li t-foreach="widget.data" t-as="product">
+                    <a class="omi_order_item js_record_item" t-att-data-id="product.id" data-model="product.template" href="javascript:;">
+                        <div class="oi_left_side">
+                            <img t-att-src="widget.productImage(product.id)"/>
+                        </div>
+                        <div class="oi_right_side">
+                            <ul>
+                                <li><b><t t-esc="product.name"/></b></li>
+                                <li><b>Mã sản phẩm</b> <t t-esc="product.default_code"/></li>
+                                <li><b>Tồn kho</b> <t t-esc="product.qty_available"/></li>
+                                <li><b>Giá bán</b> <t t-esc="product.list_price"/>đ</li>
+                            </ul>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </main>
+        <footer>
+
+        </footer>
+    </t>
+
+    <t t-name="omi_core.note_floating_screen">
+        <header>
+            <button class="btn btn-sm btn-primary js_button_new" data-model="note.note" data-action="note.action_note_note">New Note</button>
+        </header>
+        <main>
+            <ul>
+                <li t-foreach="widget.getNoteStage()" t-as="stage">
+
+                    <span class="omi_list_group"><t t-esc="stage"/></span>
+
+                    <ul class="omi_order_list">
+                        <li t-foreach="widget.data" t-as="note">
+                            <a t-if="note.stage_id[1] === stage" class="omi_order_item bl0 js_record_item" t-att-data-id="note.id" data-model="note.note" href="javascript:;">
+                                <div class="oi_left_side w0">
+                                    <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="oi_right_side">
+                                    <ul>
+                                        <li><b><t t-esc="note.name"/></b></li>
+                                        <li>
+                                            <t t-foreach="note.tag_ids" t-as="tag">
+                                                <span>
+                                                    <t t-esc="tag.name"/>,
+                                                </span>
+                                            </t>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+            </ul>
+
+        </main>
+        <footer>
+
+        </footer>
+    </t>
+
+    <t t-name="omi_core.chat_floating_screen">
+        <t t-if="widget.model === 'sale.order'">
+            <t t-call="omi_core.quotation_floating_screen"/>
+        </t>
+        <t t-elif="widget.model === 'product.template'">
+            <t t-call="omi_core.product_floating_screen"/>
+        </t>
+        <t t-elif="widget.model === 'note.note'">
+            <t t-call="omi_core.note_floating_screen"/>
+        </t>
+    </t>
+
+</templates>

@@ -14,8 +14,8 @@ VERIFY_TOKEN = '1234567890qwertyuiopasdfghjklzxcvbnm'
 class OMICore(http.Controller):
 
     def _show_message(self, sender_id, recipient_id, message_data):
-        partner = request.env['res.partner'].sudo().get_create_partner_from_psid(psid=sender_id, page_id=recipient_id)
-        channel = request.env['mail.channel'].sudo().get_create_channel_from_author(partner_id=partner.id)
+        partner = request.env['res.partner'].sudo().get_partner_from_psid(psid=sender_id, page_id=recipient_id)
+        channel = request.env['mail.channel'].sudo().get_channel_from_author(partner_id=partner.id)
         message_text = message_data.get('text')
 
         # Post message show chat pop-up

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-extend="mail.client_action">
+        <t t-jquery=".o_mail_chat_content" t-operation="append">
+            <div class="omi_header_mail_chat">
+                <div class="omi_group_button_left">
+                    <button class="btn btn-sm btn-primary js_button_process">Process</button>
+                    <button class="btn btn-sm btn-primary js_button_success">Success</button>
+                    <button class="btn btn-sm btn-primary js_button_make_an_appointment">Make an appointment</button>
+                    <button class="btn btn-sm btn-primary js_button_cancel">Cancel</button>
+                </div>
+                <div class="omi_group_button_right">
+                    <button class="btn btn-icon-no-bg"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
+                    <button class="btn btn-icon-no-bg"><i class="fa fa-ban" aria-hidden="true"></i></button>
+                    <button class="btn btn-icon-no-bg"><i class="fa fa-user-circle-o" aria-hidden="true"></i></button>
+                </div>
+            </div>
+            <div class="omi_mail_chat_sidebar_right">
+                <div class="omi_navigation">
+                    <div class="omi_group_button_top">
+                        <button class="btn btn-sm btn-default js_button_list" data-model="sale.order" data-toggle="tooltip" data-placement="left" title="Tooltip on left">Quotation</button>
+                        <button class="btn btn-sm btn-default js_button_list" data-model="product.template">Product</button>
+                        <button class="btn btn-sm btn-default js_button_list" data-model="note.note">Note</button>
+                        <button class="btn btn-sm btn-default">Add tags</button>
+                    </div>
+                    <div class="omi_group_button_bottom">
+
+                    </div>
+                </div>
+                <div class="omi_right_sidebar_content">
+
+                    <input type="text" class="omi_search js_omi_search" placeholder="Type for searching..."/>
+
+                    <div class="omi_task_bar">
+                        <a class="close" data-action="close">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                        <a class="close" data-action="search">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    <div class="omi_floating_screen">
+
+                    </div>
+                </div>
+            </div>
+        </t>
+    </t>
+
+</templates>

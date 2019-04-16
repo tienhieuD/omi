@@ -23,14 +23,14 @@ class MailChannel(models.Model):
         return values
 
     @api.model
-    def get_create_channel_from_author(self, partner_id):
+    def get_channel_from_author(self, partner_id, force_create=True):
         """ Tìm kênh chát của người dùng facebook, nếu chưa có tạo mới một cái """
         self = self.sudo()
         channel = self.search([
             ('channel_partner_ids', '=', partner_id),
             ('channel_type', '=', 'fb')
         ], limit=1)
-        if not channel:
+        if not channel and force_create:
             # TODO: Mặc định đang lấy partner gửi tin đến và Admin root (ID 3)
             channel = self.with_context(mail_create_nosubscribe=False).create({
                 'channel_partner_ids': [(6, 0, [partner_id, 3])],
