@@ -47,9 +47,11 @@ class MailChannel(models.Model):
         """ Gửi tin từ odoo -> facebook
             TODO: if sender in [list_of_fb_manager]  // trường hợp nhiều fbmanager cho 1 kênh """
         res = super(MailChannel, self).message_post(**kwargs)
-        if not res.author_id.psid and res.message_type != 'notification':  # không phải người dùng facebook
-            send_message = self.env['omi.facebook.utils'].send_message
-            recipients = self.channel_partner_ids - res.author_id
-            for recipient in recipients:
-                send_message(partner=recipient, text=html2plaintext(res.body))
+        for channel in self:
+            if channel.channel_type == 'fb':
+                if not res.author_id.psid and res.message_type != 'notification':  # không phải người dùng facebook
+                    send_message = self.env['omi.facebook.utils'].send_message
+                    recipients = channel.channel_partner_ids - res.author_id
+                    for recipient in recipients:
+                        send_message(partner=recipient, text=html2plaintext(res.body))
         return res
