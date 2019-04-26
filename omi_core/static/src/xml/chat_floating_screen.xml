@@ -100,6 +100,36 @@
         </footer>
     </t>
 
+    <t t-name="omi_core.quick_reply_floating_screen">
+        <header>
+        </header>
+        <main>
+            <ul class="omi_order_list">
+                <li t-foreach="widget.data" t-as="quick_reply_template">
+                    <a class="omi_order_item bl0 js_record_item" t-att-data-id="quick_reply_template.id" data-model="omi.quick.reply" href="#" t-att-title="quick_reply_template.reply_content">
+                        <div class="oi_left_side w0">
+                            <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                        </div>
+                        <div class="oi_right_side">
+                            <ul>
+                                <li><b><t t-esc="quick_reply_template.name"/></b></li>
+                                <li><i><t t-esc="quick_reply_template.reply_content"/></i></li>
+                                <li>
+                                    <t t-foreach="quick_reply_template.keyword_ids" t-as="keyword">
+                                        <span><t t-esc="keyword.name"/>,</span>
+                                    </t>
+                                </li>
+                            </ul>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </main>
+        <footer>
+
+        </footer>
+    </t>
+
     <t t-name="omi_core.chat_floating_screen">
         <t t-if="widget.model === 'sale.order'">
             <t t-call="omi_core.quotation_floating_screen"/>
@@ -109,6 +139,9 @@
         </t>
         <t t-elif="widget.model === 'note.note'">
             <t t-call="omi_core.note_floating_screen"/>
+        </t>
+        <t t-elif="widget.model === 'omi.quick.reply'">
+            <t t-call="omi_core.quick_reply_floating_screen"/>
         </t>
     </t>
 

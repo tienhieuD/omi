@@ -12,6 +12,28 @@ class ResPartner(models.Model):
 
     psid = fields.Char("Facebook Page Sender ID")
     page_id = fields.Char("Facebook Page ID")
+    fb_page_id = fields.Many2one('omi.fb.page', 'Page Name', compute='_compute_facebook_page')
+
+    @api.depends('page_id')
+    def _compute_facebook_page(self):
+        OmiFbPage = self.env['omi.fb.page']
+        for partner in self:
+            partner.fb_page_id = OmiFbPage.search([('page_id', '=', partner.page_id)], limit=1).id
+
+    @api.model
+    def action_show_partner(self, channel_id):
+        if not isinstance(channel_id, int):
+            return {}
+        partner_id = self.env['mail.channel'].browse(channel_id).get_partners().filtered('psid')[:1].id
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'views': [[False, 'form']],
+            'res_model': 'res.partner',
+            'res_id': partner_id,
+            'target': 'new',
+        }
 
     def get_as_base64(self, url):
         return base64.b64encode(requests.get(url).content)

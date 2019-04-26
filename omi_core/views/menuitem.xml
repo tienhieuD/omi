@@ -2,9 +2,12 @@
 <odoo>
     <data>
 
+        <menuitem id="mail_message_menu" name="Facebook Message" parent="crm.crm_menu_root" action="mail_channel_act" sequence="3"/>
+
         <menuitem id="menu_omi_root" name="OMI Config" parent="base.menu_administration" sequence="5"/>
-        <menuitem id="menu_omi_config_settings" action="omi_config_settings_action" name="Configuration" parent="menu_omi_root" sequence="10"/>
-        <menuitem id="menu_omi_fb_permission" action="omi_fb_permission_act" name="Permission" parent="menu_omi_root" sequence="20"/>
+            <menuitem id="menu_omi_config_settings" action="omi_config_settings_action" name="Configuration" parent="menu_omi_root" sequence="10"/>
+            <menuitem id="menu_omi_fb_permission" action="omi_fb_permission_act" name="Permission" parent="menu_omi_root" sequence="20"/>
+            <menuitem id="menu_omi_quick_reply" action="omi_quick_reply_view_act" name="Quick Reply Template" parent="menu_omi_root" sequence="30"/>
 
     </data>
 </odoo>

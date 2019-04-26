@@ -6,6 +6,13 @@ class MailChannel(models.Model):
     _inherit = 'mail.channel'
 
     channel_type = fields.Selection(selection_add=[('fb', 'Facebook Messenger')])
+    channel_status = fields.Selection([
+        ('new', 'New'),
+        ('process', 'Process'),
+        ('success', 'Success'),
+        ('later', 'Later'),
+        ('cancel', 'Cancel'),
+    ], default='new')
 
     @api.model
     def channel_fetch_slot(self):
@@ -21,6 +28,10 @@ class MailChannel(models.Model):
             ('channel_type', '=', 'fb')
         ]).channel_info()
         return values
+
+    @api.multi
+    def get_partners(self):
+        return self.mapped('channel_partner_ids')
 
     @api.model
     def get_channel_from_author(self, partner_id, force_create=True):
@@ -55,3 +66,14 @@ class MailChannel(models.Model):
                     for recipient in recipients:
                         send_message(partner=recipient, text=html2plaintext(res.body))
         return res
+
+    @api.multi
+    def channel_info(self, extra_info=False):
+        extra_info = {
+            'channel_status': dict((channel.id, channel.channel_status) for channel in self)
+        }
+        return super(MailChannel, self).channel_info(extra_info)
+
+    @api.multi
+    def change_channel_status(self, new_status):
+        return self.write({'channel_status': new_status})

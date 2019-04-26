@@ -4,6 +4,19 @@ odoo.define('omi_core.chat_client_action', function (require) {
     var Widget = require("web.Widget");
     var ChatAction = require('mail.chat_client_action');
     var KanbanRecord = require('web.KanbanRecord');
+    var chat_manager = require('mail.chat_manager');
+
+    var ChatStatusBar = Widget.extend({
+        template: 'omi_core.chat_status_bar',
+        init: function (parent, options) {
+            this._super.apply(this, arguments);
+            this.parent = parent;
+            this.options = options;
+        },
+        start: function() {
+            this._super.apply(this, arguments);
+        },
+    });
 
     var ChatFloatingScreen = Widget.extend({
         template: 'omi_core.chat_floating_screen',
@@ -44,6 +57,9 @@ odoo.define('omi_core.chat_client_action', function (require) {
                         'color',
                         'stage_id',
                         'tag_ids',
+                        // For omi.quick.reply
+                        'reply_content',
+                        'keyword_ids',
                     ],
                 },
                 context: {
@@ -53,6 +69,9 @@ odoo.define('omi_core.chat_client_action', function (require) {
                             'limit': 5,
                         },
                         'tag_ids': {
+                            'fields': ['name'],
+                        },
+                        'keyword_ids': {
                             'fields': ['name'],
                         },
                     },
@@ -92,12 +111,15 @@ odoo.define('omi_core.chat_client_action', function (require) {
         init: function (parent, action, options) {
             this._super.apply(this, arguments);
             this.floating_screen = new ChatFloatingScreen(this, {});
+            this.chat_status_bar = new ChatStatusBar(this, {});
         },
         events: _.extend({}, ChatAction.prototype.events, {
             'click .js_button_list': '_onClickButtonList',
             'click .omi_task_bar a': '_onClickTaskBarButton',
             'click .js_button_new': '_onClickButtonNew',
             'click .js_record_item': '_onClickItem',
+            'click .js_channel_status': '_onClickChannelStatus',
+            'click .js_button_header': '_onClickButtonHeader',
             'keyup .js_omi_search': '_onKeyupSearch',
         }),
 
@@ -109,9 +131,38 @@ odoo.define('omi_core.chat_client_action', function (require) {
         },
 
         reloadList: function (options) {
+            if (_.isUndefined(options.model)) {
+                return false;
+            }
             this.floating_screen.destroy();
             this.floating_screen = new ChatFloatingScreen(this, options);
             this.floating_screen.appendTo($('.omi_floating_screen'));
+        },
+
+        reloadStatusBar: function () {
+            this.chat_status_bar.destroy();
+            this.chat_status_bar = new ChatStatusBar(this, {status: this.channel.channel_status});
+            this.chat_status_bar.appendTo($('.omi_group_button_right'));
+        },
+
+        _onClickButtonHeader: function (e) {
+            var self = this;
+            var target = $(e.currentTarget);
+            var model = target.data('model');
+            var method = target.data('method');
+            var channel_id = this.channel.id;
+
+            this._rpc({
+                model: model,
+                method: method,
+                args: [this.channel.id],
+            }).done(function (action) {
+                if (!action.res_id) {
+                    return false;
+                }
+                self.do_action(action);
+            });
+
         },
 
         _onKeyupSearch: function (e) {
@@ -209,14 +260,53 @@ odoo.define('omi_core.chat_client_action', function (require) {
             });
         },
 
-        // Inherit functions
-        _onChannelClicked: function (event) {
-            this._super.apply(this, arguments);
-            this.reloadList({
-                model: this.floating_screen.model,
+        _onClickChannelStatus: function (e) {
+            var self = this;
+            var new_status = $(e.currentTarget).data('value');
+
+            this._rpc({
+                model: 'mail.channel',
+                method: 'change_channel_status',
+                args: [this.channel.id, new_status],
+            }).done(function (res) {
+                self.channel_status = new_status;
+                $(e.currentTarget).siblings().removeClass('btn-primary disabled');
+                $(e.currentTarget).addClass('btn-primary disabled');
             });
         },
 
+        // Inherit functions
+        _onChannelClicked: function (event) {
+            var self = this;
+            this._super.apply(this, arguments);
+
+            if (typeof(this.channel.id) === 'number') {
+                this._rpc({
+                    model: 'mail.channel',
+                    method: 'read',
+                    args: [this.channel.id, ['channel_status']],
+                }).done(function (res) {
+                    self.channel_status = res[0].channel_status;
+                    self.reloadStatusBar();
+                });
+            }
+
+            this.reloadList({
+                model: this.floating_screen.model,
+            });
+
+        },
+
     });
+
+    var make_channel = chat_manager.__proto__.make_channel;
+
+    chat_manager.__proto__.make_channel = function (data, options) {
+        var res = make_channel(data, options);
+        res.channel_status = data.info.channel_status[data.id];
+        return res;
+    };
+
+    return ChatFloatingScreen;
 
 });

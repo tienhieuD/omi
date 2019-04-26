@@ -1,28 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
 
+    <t t-name="omi_core.chat_status_bar">
+        <div class="o_form_view">
+            <div class="o_form_statusbar">
+                <div class="o_statusbar_status">
+                    <button data-value="cancel" t-attf-class="btn btn-sm o_arrow_button js_channel_status btn-default {{widget.options.status == 'cancel' ? 'btn-primary disabled' : ''}}">
+                        Cancel
+                    </button>
+                    <button data-value="later" t-attf-class="btn btn-sm o_arrow_button js_channel_status btn-default {{widget.options.status == 'later' ? 'btn-primary disabled' : ''}}">
+                        Success
+                    </button>
+                    <button data-value="success" t-attf-class="btn btn-sm o_arrow_button js_channel_status btn-default {{widget.options.status == 'success' ? 'btn-primary disabled' : ''}}">
+                        Later
+                    </button>
+                    <button data-value="process" t-attf-class="btn btn-sm o_arrow_button js_channel_status btn-default {{widget.options.status == 'process' ? 'btn-primary disabled' : ''}}">
+                        Process
+                    </button>
+                    <button data-value="new" t-attf-class="btn btn-sm o_arrow_button js_channel_status btn-default {{widget.options.status == 'new' ? 'btn-primary disabled' : ''}}">
+                        New
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+
     <t t-extend="mail.client_action">
         <t t-jquery=".o_mail_chat_content" t-operation="append">
             <div class="omi_header_mail_chat">
                 <div class="omi_group_button_left">
-                    <button class="btn btn-sm btn-primary js_button_process">Process</button>
-                    <button class="btn btn-sm btn-primary js_button_success">Success</button>
-                    <button class="btn btn-sm btn-primary js_button_make_an_appointment">Make an appointment</button>
-                    <button class="btn btn-sm btn-primary js_button_cancel">Cancel</button>
+                    <button class="btn btn-icon-no-bg js_button_header"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
+                    <button class="btn btn-icon-no-bg js_button_header"><i class="fa fa-ban" aria-hidden="true"></i></button>
+                    <button class="btn btn-icon-no-bg js_button_header" data-model="res.partner" data-method="action_show_partner">
+                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                    </button>
                 </div>
                 <div class="omi_group_button_right">
-                    <button class="btn btn-icon-no-bg"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
-                    <button class="btn btn-icon-no-bg"><i class="fa fa-ban" aria-hidden="true"></i></button>
-                    <button class="btn btn-icon-no-bg"><i class="fa fa-user-circle-o" aria-hidden="true"></i></button>
+                    <!--<t t-call="omi_core.chat_status_bar"/>-->
                 </div>
             </div>
             <div class="omi_mail_chat_sidebar_right">
                 <div class="omi_navigation">
                     <div class="omi_group_button_top">
-                        <button class="btn btn-sm btn-default js_button_list" data-model="sale.order" data-toggle="tooltip" data-placement="left" title="Tooltip on left">Quotation</button>
-                        <button class="btn btn-sm btn-default js_button_list" data-model="product.template">Product</button>
-                        <button class="btn btn-sm btn-default js_button_list" data-model="note.note">Note</button>
-                        <button class="btn btn-sm btn-default">Add tags</button>
+                        <button class="btn btn-sm btn-default js_button_list" data-model="sale.order">
+                            <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn btn-sm btn-default js_button_list" data-model="product.template">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn btn-sm btn-default js_button_list" data-model="note.note">
+                            <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn btn-sm btn-default js_button_list" data-model="omi.quick.reply">
+                            <i class="fa fa-comments-o" aria-hidden="true"></i>
+                        </button>
                     </div>
                     <div class="omi_group_button_bottom">
 

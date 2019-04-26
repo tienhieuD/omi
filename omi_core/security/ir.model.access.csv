@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_omi_fb_permission,access_omi_fb_permission,model_omi_fb_permission,base.group_user,1,1,1,1
-access_omi_fb_access_token,access_omi_fb_access_token,model_omi_fb_access_token,base.group_user,1,1,1,1
+access_omi_fb_access_token,access_omi_fb_access_token,model_omi_fb_page,base.group_user,1,1,1,1
+access_omi_quick_reply,access_omi_quick_reply,model_omi_quick_reply,base.group_user,1,1,1,1
+access_omi_quick_reply_tag,access_omi_quick_reply_tag,model_omi_quick_reply_tag,base.group_user,1,1,1,1

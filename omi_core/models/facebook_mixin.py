@@ -25,7 +25,7 @@ class FacebookUtils(models.AbstractModel):
         :param page_id: ID of Facebook Page
         :return: string: access token
         """
-        page_access_token = self.env['omi.fb.access.token'].search([('page_id', '=', page_id)], limit=1).access_token
+        page_access_token = self.env['omi.fb.page'].search([('page_id', '=', page_id)], limit=1).access_token
         try:
             facebook.GraphAPI(access_token=page_access_token, version=self.version).get_object("me")
             return page_access_token
@@ -37,14 +37,15 @@ class FacebookUtils(models.AbstractModel):
                 graph = facebook.GraphAPI(access_token=access_token, version=self.version)
                 accounts_data = graph.get_connections('me', 'accounts')
                 for page in accounts_data['data']:
-                    page_token = self.env['omi.fb.access.token'].search([('page_id', '=', page['id'])], limit=1)
+                    page_token = self.env['omi.fb.page'].search([('page_id', '=', page['id'])], limit=1)
 
                     if page_token:
                         page_token.write({'access_token': page['access_token']})
                     else:
-                        self.env['omi.fb.access.token'].create({
+                        self.env['omi.fb.page'].create({
                             'page_id': page['id'],
-                            'access_token': page['access_token']
+                            'access_token': page['access_token'],
+                            'name': page['name'],
                         })
 
                 return self._get_page_access_token(page_id)
