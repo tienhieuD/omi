@@ -13,7 +13,7 @@ OMI
 
 |badge1|
 
-This module support to connect to Facebook API to manager messages, comments and posts.
+This module support to connect to Facebook API to manager messages.
 
 **Table of contents**
 
