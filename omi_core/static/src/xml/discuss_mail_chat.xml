@@ -6,19 +6,19 @@
             <div class="o_form_statusbar">
                 <div class="o_statusbar_status">
                     <button data-value="cancel" t-attf-class="btn btn-sm o_arrow_button js_channel_status btn-default {{widget.options.status == 'cancel' ? 'btn-primary disabled' : ''}}">
-                        Cancel
+                        Hủy
                     </button>
                     <button data-value="later" t-attf-class="btn btn-sm o_arrow_button js_channel_status btn-default {{widget.options.status == 'later' ? 'btn-primary disabled' : ''}}">
-                        Success
+                        Thành công
                     </button>
                     <button data-value="success" t-attf-class="btn btn-sm o_arrow_button js_channel_status btn-default {{widget.options.status == 'success' ? 'btn-primary disabled' : ''}}">
-                        Later
+                        Hẹn mua lần tới
                     </button>
                     <button data-value="process" t-attf-class="btn btn-sm o_arrow_button js_channel_status btn-default {{widget.options.status == 'process' ? 'btn-primary disabled' : ''}}">
-                        Process
+                        Đang xủ lý
                     </button>
                     <button data-value="new" t-attf-class="btn btn-sm o_arrow_button js_channel_status btn-default {{widget.options.status == 'new' ? 'btn-primary disabled' : ''}}">
-                        New
+                        Khách mới
                     </button>
                 </div>
             </div>

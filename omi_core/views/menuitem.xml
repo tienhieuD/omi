@@ -8,6 +8,24 @@
             <menuitem id="menu_omi_config_settings" action="omi_config_settings_action" name="Configuration" parent="menu_omi_root" sequence="10"/>
             <menuitem id="menu_omi_fb_permission" action="omi_fb_permission_act" name="Permission" parent="menu_omi_root" sequence="20"/>
             <menuitem id="menu_omi_quick_reply" action="omi_quick_reply_view_act" name="Quick Reply Template" parent="menu_omi_root" sequence="30"/>
+            <menuitem id="menu_omi_hidden_setting" name="Other Settings" parent="menu_omi_root" sequence="40"/>
+                <menuitem id="calendar.mail_menu_calendar" parent="menu_omi_hidden_setting"/>
+                <menuitem id="note.menu_note_notes" parent="menu_omi_hidden_setting"/>
+                <menuitem id="contacts.menu_contacts" parent="menu_omi_hidden_setting"/>
+                <menuitem id="crm.crm_menu_root" parent="menu_omi_hidden_setting"/>
+                <menuitem id="sale.sale_menu_root" parent="menu_omi_hidden_setting"/>
+                <menuitem id="utm.menu_link_tracker_root" parent="menu_omi_hidden_setting"/>
+                <menuitem id="stock.menu_stock_root" parent="menu_omi_hidden_setting"/>
+                <menuitem id="account.menu_finance" parent="menu_omi_hidden_setting"/>
+                <menuitem id="im_livechat.menu_livechat_root" parent="menu_omi_hidden_setting"/>
+                <menuitem id="base.menu_management" parent="menu_omi_hidden_setting"/>
+
+
+<!--        Đổi tên menu-->
+
+        <record model="ir.ui.menu" id="mail.mail_channel_menu_root_chat">
+            <field name="name">Các cuộc hội thoại</field>
+        </record>
 
     </data>
 </odoo>
