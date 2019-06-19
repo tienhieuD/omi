@@ -77,3 +77,11 @@ class MailChannel(models.Model):
     @api.multi
     def change_channel_status(self, new_status):
         return self.write({'channel_status': new_status})
+
+    @api.multi
+    def un_read(self):
+        mailchannels = self.env['mail.channel.partner'].search([('channel_id', '=', self.id)])
+        message = self.env['mail.message'].search([('model', '=', 'mail.channel'), ('res_id', '=', self.id)], limit=1, offset=1)
+        for mailchannel in mailchannels:
+            mailchannel.sudo().write({'seen_message_id': message.id})
+        return self.id

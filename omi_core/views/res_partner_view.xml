@@ -8,10 +8,45 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
 
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button name="open_point_form" string="Tích điểm khách hàng" class="oe_highlight" type="object"/>
+                    </header>
+                </xpath>
+
                 <xpath expr="//field[@name='function']" position="before">
-                    <field name="psid"/>
-                    <field name="fb_page_id"/>
-                    <field name="page_id"/>
+                    <field name="point" readonly="1"/>
+                    <field name="rank_id"/>
+                </xpath>
+
+                <xpath expr="//page[1]" position="before">
+                    <page string="Thông tin kết nối">
+                        <group>
+                            <field name="banned" widget="toggle_button"/>
+                            <field name="psid"/>
+                            <field name="fb_page_id"/>
+                            <field name="page_id"/>
+                        </group>
+                    </page>
+                </xpath>
+
+                <xpath expr="//field[@name='vat']" position="before">
+                    <field name="birth_day"/>
+                </xpath>
+
+                <!--Ẩn bớt-->
+                <xpath expr="//field[@name='vat']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lang']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='website']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='email']" position="attributes">
+                    <attribute name="string">Email</attribute>
                 </xpath>
 
             </field>

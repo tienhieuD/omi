@@ -43,6 +43,7 @@ odoo.define('omi_core.chat_client_action', function (require) {
                     domain: self.domain,
                     fields: [
                         'name',
+                        'display_name',
                         // For order
                         'amount_total',
                         'confirmation_date',
@@ -121,7 +122,25 @@ odoo.define('omi_core.chat_client_action', function (require) {
             'click .js_channel_status': '_onClickChannelStatus',
             'click .js_button_header': '_onClickButtonHeader',
             'keyup .js_omi_search': '_onKeyupSearch',
+            'click .js_mark_as_unread': '_mark_as_unread',
         }),
+
+        _mark_as_unread: function(e) {
+            if (typeof(this.channel.id) === "string") {
+                alert("There is not fb channel.");
+                return;
+            }
+            var self = this;
+            this._rpc({
+                model: 'mail.channel',
+                method: 'un_read',
+                args: [self.channel.id],
+            }).done(function(channel_id){
+                self.channel.unread_counter = 1;
+                self._updateChannels();
+                $('div[data-channel-id="channel_inbox"]').trigger('click');
+            });
+        },
 
         openNavigation: function () {
             $('.o_mail_chat .o_mail_chat_content').addClass('omi_shrink_from_the_right');
@@ -272,6 +291,7 @@ odoo.define('omi_core.chat_client_action', function (require) {
                 self.channel_status = new_status;
                 $(e.currentTarget).siblings().removeClass('btn-primary disabled');
                 $(e.currentTarget).addClass('btn-primary disabled');
+                self.channel.channel_status = new_status;
             });
         },
 

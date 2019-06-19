@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="omi_sale_report_act1" model="ir.actions.act_window">
+            <field name="name">Báo cáo thống kê</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.report</field>
+            <field name="view_mode">pivot,graph</field>
+        </record>
+
+        <record id="omi_sale_report_act2" model="ir.actions.act_window">
+            <field name="name">Báo cáo thống kê</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.report</field>
+            <field name="view_mode">pivot,graph</field>
+        </record>
+
+        <record id="omi_sale_report_act3" model="ir.actions.act_window">
+            <field name="name">Báo cáo thống kê</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.report</field>
+            <field name="view_mode">pivot,graph</field>
+        </record>
+
+        <record id="omi_sale_report_act4" model="ir.actions.act_window">
+            <field name="name">Báo cáo thống kê</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.report</field>
+            <field name="view_mode">pivot,graph</field>
+        </record>
+
+        <record id="omi_sale_report_act5" model="ir.actions.act_window">
+            <field name="name">Báo cáo thống kê</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.report</field>
+            <field name="view_mode">pivot,graph</field>
+        </record>
+
+
+        <record id="omi_sale_report_act6" model="ir.actions.act_window">
+            <field name="name">Báo cáo thống kê</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.report</field>
+            <field name="view_mode">pivot,graph</field>
+        </record>
+
+        <record id="omi_sale_report_act7" model="ir.actions.act_window">
+            <field name="name">Báo cáo thống kê</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.report</field>
+            <field name="view_mode">pivot,graph</field>
+        </record>
+
+        <record id="omi_sale_report_act8" model="ir.actions.act_window">
+            <field name="name">Báo cáo thống kê</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.report</field>
+            <field name="view_mode">pivot,graph</field>
+        </record>
+
+        <record id="omi_sale_report_act9" model="ir.actions.act_window">
+            <field name="name">Báo cáo thống kê</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.report</field>
+            <field name="view_mode">pivot,graph</field>
+        </record>
+
+        <record id="omi_sale_report_act10" model="ir.actions.act_window">
+            <field name="name">Báo cáo thống kê</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.report</field>
+            <field name="view_mode">pivot,graph</field>
+        </record>
+
+        <record id="omi_sale_report_act11" model="ir.actions.act_window">
+            <field name="name">Báo cáo thống kê</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.report</field>
+            <field name="view_mode">pivot,graph</field>
+        </record>
+
+
+    </data>
+</odoo>

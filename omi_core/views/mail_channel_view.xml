@@ -7,9 +7,21 @@
             <field name="model">mail.channel</field>
             <field name="inherit_id" ref="mail.mail_channel_view_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <!-- Add your fields or attributes here -->
+                    <header>
+                        <field name="channel_status" widget="statusbar"/>
+                    </header>
+                </xpath>
+                <xpath expr="//div[@class='oe_button_box']" position="inside">
+                    <button invisible="1" string="Tin nhắn" name="view_message" type="object" class="oe_stat_button" icon="fa-envelope-o"/>
+                </xpath>
 
-                <xpath expr="//field[@name='email_send']" position="before">
-                    <field name="channel_status"/>
+                <xpath expr="//field[@name='email_send']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='anonymous_name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
                 </xpath>
 
                 <xpath expr="//field[@name='channel_last_seen_partner_ids']/tree" position="inside">
@@ -18,6 +30,17 @@
                     <field name="is_pinned"/>
                 </xpath>
 
+                <xpath expr="//page[1]" position="before">
+                    <page string="Tin nhắn trong kênh">
+                        <field name="message_ids">
+                            <tree>
+                                <field name="date"/>
+                                <field name="author_id"/>
+                                <field name="body"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
             </field>
         </record>
 
@@ -28,7 +51,10 @@
                 <tree string="Channel">
                     <field name="name"/>
                     <field name="channel_status"/>
+                    <field name="channel_type"/>
                     <field name="description"/>
+                    <field name="public"/>
+                    <field name="uuid"/>
                 </tree>
             </field>
         </record>
@@ -44,6 +70,5 @@
                 (0, 0, {'view_mode': 'form', 'view_id': ref('mail.mail_channel_view_form')}),
             ]"/>
         </record>
-
     </data>
 </odoo>

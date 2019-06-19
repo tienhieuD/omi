@@ -29,7 +29,7 @@
         <t t-jquery=".o_mail_chat_content" t-operation="append">
             <div class="omi_header_mail_chat">
                 <div class="omi_group_button_left">
-                    <button class="btn btn-icon-no-bg js_button_header"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
+                    <button class="btn btn-icon-no-bg js_mark_as_unread"><i class="fa fa-envelope-o" aria-hidden="true"></i></button>
                     <button class="btn btn-icon-no-bg js_button_header"><i class="fa fa-ban" aria-hidden="true"></i></button>
                     <button class="btn btn-icon-no-bg js_button_header" data-model="res.partner" data-method="action_show_partner">
                         <i class="fa fa-user-circle-o" aria-hidden="true"></i>

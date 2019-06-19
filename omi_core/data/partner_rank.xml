@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="rank1" model="partner.rank">
+            <field name="name">Đồng</field>
+            <field name="point_start" eval="0.0"/>
+            <field name="point_end" eval="100.0"/>
+        </record>
+
+        <record id="rank2" model="partner.rank">
+            <field name="name">Bạc</field>
+            <field name="point_start" eval="100.0"/>
+            <field name="point_end" eval="300.0"/>
+        </record>
+
+        <record id="rank3" model="partner.rank">
+            <field name="name">Vàng</field>
+            <field name="point_start" eval="300.0"/>
+            <field name="point_end" eval="99999999999.0"/>
+        </record>
+
+    </data>
+</odoo>

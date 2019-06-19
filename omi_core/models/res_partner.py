@@ -13,6 +13,29 @@ class ResPartner(models.Model):
     psid = fields.Char("Facebook Page Sender ID")
     page_id = fields.Char("Facebook Page ID")
     fb_page_id = fields.Many2one('omi.fb.page', 'Page Name', compute='_compute_facebook_page')
+    point = fields.Float('Điểm khách hàng', track_visibility='always')
+    rank_id = fields.Many2one('partner.rank', string="Hạng", compute='_compute_rank')
+    birth_day = fields.Date('Ngày sinh')
+    banned = fields.Boolean(default=False)
+
+    @api.depends('point')
+    def _compute_rank(self):
+        for rec in self:
+            rec.rank_id = self.env['partner.rank'].get_rank(rec.point)
+
+    @api.multi
+    def add_point(self, point):
+        for rec in self:
+            new_point = rec.point + point
+            rec.write({'point': new_point})
+        return True
+
+    @api.multi
+    def sub_point(self, point):
+        for rec in self:
+            new_point = rec.point - point
+            rec.write({'point': new_point})
+        return True
 
     @api.depends('page_id')
     def _compute_facebook_page(self):
@@ -64,3 +87,28 @@ class ResPartner(models.Model):
             )
 
         return partner
+
+    @api.multi
+    def open_point_form(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'point.form',
+            'view_mode': 'form',
+            'view_type': 'form',
+            'view_id': self.env.ref('omi_core.point_form').id,
+            'target': 'new',
+            'context': {'default_partner_id': self.id},
+        }
+
+
+class PartnerRank(models.Model):
+    _name = 'partner.rank'
+    _description = 'Partner ranks'
+
+    name = fields.Char()
+    point_start = fields.Float()
+    point_end = fields.Float()
+
+    @api.model
+    def get_rank(self, point):
+        return self.search([('point_start', '<', point), ('point_end', '>', point)], limit=1).id

@@ -21,11 +21,52 @@
                 <menuitem id="base.menu_management" parent="menu_omi_hidden_setting"/>
 
 
-<!--        Đổi tên menu-->
-
+        <!--Đổi tên menu-->
         <record model="ir.ui.menu" id="mail.mail_channel_menu_root_chat">
             <field name="name">Các cuộc hội thoại</field>
         </record>
+
+        <menuitem id="mail.mail_channel_menu_root_chat" name="Các cuộc hội thoại" action="mail.mail_channel_action_client_chat" web_icon="mail,static/description/icon.png" groups="base.group_user" sequence="1"/>
+
+        <!--Menu-->
+        <!--Quản lý tài khoản-->
+        <menuitem id="action_res_users_menu" name="Quản lý tài khoản" action="base.action_res_users" sequence="10"/>
+
+        <!--Quản lý hội thoại-->
+        <menuitem id="conversation_menu" name="Quản lý hội thoại" sequence="20"/>
+            <menuitem id="mail_channel_action_menu" name="Các phiên hội thoại" action="mail_channel_act" parent="conversation_menu" sequence="10"/>
+            <menuitem id="omi_quick_reply_view_act_menu" name="Kịch bản mẫu" action="omi_quick_reply_view_act" parent="conversation_menu" sequence="20"/>
+
+        <menuitem id="omi_customer_root_menu" name="Quản lý khách hàng" action="contacts.action_contacts" sequence="30"/>
+            <menuitem id="omi_customer_menu" name="Khách hàng" action="contacts.action_contacts" parent="omi_customer_root_menu" sequence="10"/>
+            <menuitem id="omi_customer_rank_menu" name="Hạng khách hàng" action="partner_rank_act" parent="omi_customer_root_menu" sequence="20"/>
+
+        <menuitem id="omi_sale_root_menu" name="Quản lý bán hàng" action="sale.action_quotations" sequence="40"/>
+            <menuitem id="omi_order_menu" name="Đơn hàng" action="sale.action_quotations" parent="omi_sale_root_menu" sequence="10"/>
+                <menuitem id="omi_quo_menu" name="Báo giá" action="sale.action_quotations" parent="omi_order_menu" sequence="10"/>
+                <menuitem id="omi_ord_menu" name="Đang xử lý" action="sale.action_orders" parent="omi_order_menu" sequence="20"/>
+            <menuitem id="omi_catelog_menu" name="Danh mục sản phẩm" parent="omi_sale_root_menu" sequence="10"/>
+                <menuitem id="omi_product1_menu" name="Sản phẩm" action="product.product_template_action" parent="omi_catelog_menu" sequence="10"/>
+                <menuitem id="omi_product2_menu" name="Các biến thể sản phẩm" action="product.product_normal_action_sell" parent="omi_catelog_menu" sequence="20"/>
+                <menuitem id="omi_product3_menu" name="Thuộc tính sản phẩm" action="product.attribute_action" parent="omi_catelog_menu" sequence="20"/>
+                <menuitem id="omi_product4_menu" name="Giá trị thuộc tính" action="product.variants_action" parent="omi_catelog_menu" sequence="20"/>
+                <menuitem id="omi_product5_menu" name="Danh mục sản phẩm" action="product.product_category_action_form" parent="omi_catelog_menu" sequence="20"/>
+
+        <menuitem id="rp_menu1" name="Báo cáo thống kê" action="omi_sale_report_act1" sequence="50"/>
+            <menuitem id="rp_menu2" name="Doanh thu" parent="rp_menu1" action="omi_sale_report_act1" sequence="10"/>
+                <menuitem id="rp_menu3" name="Theo nhân viên" parent="rp_menu2" action="omi_sale_report_act1" sequence="10"/>
+                <menuitem id="rp_menu4" name="Theo thời gian" parent="rp_menu2" action="omi_sale_report_act2" sequence="20"/>
+                <menuitem id="rp_menu5" name="Theo sản phẩm" parent="rp_menu2" action="omi_sale_report_act3" sequence="30"/>
+                <menuitem id="rp_menu6" name="Theo danh mục sản phẩm" parent="rp_menu2" action="omi_sale_report_act4" sequence="40"/>
+                <menuitem id="rp_menu7" name="Theo khách hàng" parent="rp_menu2" action="omi_sale_report_act5" sequence="50"/>
+            <menuitem id="rp_menu8" name="Số lượng sản phẩm" parent="rp_menu1" action="omi_sale_report_act6" sequence="20"/>
+                <menuitem id="rp_menu9" name="Theo nhân viên" parent="rp_menu8" action="omi_sale_report_act6" sequence="10"/>
+                <menuitem id="rp_menu10" name="Theo thời gian" parent="rp_menu8" action="omi_sale_report_act7" sequence="20"/>
+                <!--<menuitem id="rp_menu12" name="Theo danh mục sản phẩm" parent="rp_menu8" action="omi_sale_report_act8" sequence="40"/>-->
+                <menuitem id="rp_menu13" name="Theo khách hàng" parent="rp_menu8" action="omi_sale_report_act9" sequence="50"/>
+            <menuitem id="rp_menu14" name="Lợi nhuận biên" parent="rp_menu1" action="omi_sale_report_act10" sequence="30"/>
+            <menuitem id="rp_menu15" name="Tùy biến báo cáo" parent="rp_menu1" action="omi_sale_report_act11" sequence="40"/>
+
 
     </data>
 </odoo>

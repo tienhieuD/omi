@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="point_form" model="ir.ui.view">
+            <field name="name">Point Form</field>
+            <field name="model">point.form</field>
+            <field name="arch" type="xml">
+                <form string="Point">
+                    <sheet>
+                        <group>
+                            <field name="partner_id" domain="[('customer', '=', True)]"/>
+                            <field name="point"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_apply" class="btn-primary" type="object" string="Áp dụng" />
+                        <button special="cancel" class="btn-default" string="Hủy bỏ"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="apply_point_form" model="ir.ui.view">
+            <field name="name">Point Form</field>
+            <field name="model">apply.point.form</field>
+            <field name="arch" type="xml">
+                <form string="Point">
+                    <sheet>
+                        <group string="Nhập số điểm cần áp dụng cho đơn">
+                            <field name="partner_id" invisible="0"/>
+                            <field name="order_id" invisible="0"/>
+                            <field name="point"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_apply_point" class="btn-primary" type="object" string="Áp dụng" />
+                        <button special="cancel" class="btn-default" string="Hủy bỏ"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="partner_rank_act" model="ir.actions.act_window">
+            <field name="name">Hạng khách hàng</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">partner.rank</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>
