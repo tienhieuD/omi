@@ -25,30 +25,30 @@ class FacebookUtils(models.AbstractModel):
         :param page_id: ID of Facebook Page
         :return: string: access token
         """
-        page_access_token = self.env['omi.fb.page'].search([('page_id', '=', page_id)], limit=1).access_token
+        page_access_token = self.env['omi.fb.page'].sudo().search([('page_id', '=', page_id)], limit=1).access_token
         try:
             facebook.GraphAPI(access_token=page_access_token, version=self.version).get_object("me")
             return page_access_token
 
         except facebook.GraphAPIError as exc:
             _logger.info("Maybe page(%s) access token is expired.\n%s" % (page_id, exc))
-            access_token = self._get_access_token()
+            access_token = self.sudo()._get_access_token()
             try:
                 graph = facebook.GraphAPI(access_token=access_token, version=self.version)
                 accounts_data = graph.get_connections('me', 'accounts')
                 for page in accounts_data['data']:
-                    page_token = self.env['omi.fb.page'].search([('page_id', '=', page['id'])], limit=1)
+                    page_token = self.env['omi.fb.page'].sudo().search([('page_id', '=', page['id'])], limit=1)
 
                     if page_token:
-                        page_token.write({'access_token': page['access_token']})
+                        page_token.sudo().write({'access_token': page['access_token']})
                     else:
-                        self.env['omi.fb.page'].create({
+                        self.env['omi.fb.page'].sudo().create({
                             'page_id': page['id'],
                             'access_token': page['access_token'],
                             'name': page['name'],
                         })
 
-                return self._get_page_access_token(page_id)
+                return self.sudo()._get_page_access_token(page_id)
             except facebook.GraphAPIError as exc:
                 _logger.info("Maybe user's access token is expired.\n%s" % exc)
                 raise exceptions.MissingError("User access token is expired.\n%s" % exc)
@@ -73,8 +73,9 @@ class FacebookUtils(models.AbstractModel):
         """
         recipient_id = partner.psid
         page_id = partner.page_id
-        if not page_id and not recipient_id:
-            exceptions.MissingError("Can't send message to this partner.")
+        if not page_id or not recipient_id:
+            _logger.info("Can't send message to this partner. %s" % partner.id)
+            return False
         access_token = self._get_page_access_token(page_id)
         response = Bot(access_token).send_text_message(recipient_id, text)
         if response.get('error'):
