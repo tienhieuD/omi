@@ -30,7 +30,7 @@
 
         <!--Menu-->
         <!--Quản lý tài khoản-->
-        <menuitem id="action_res_users_menu" name="Quản lý tài khoản" action="base.action_res_users" sequence="10"/>
+        <menuitem id="action_res_users_menu" name="Quản lý tài khoản" action="base.action_res_users" sequence="10" groups="base.group_system"/>
 
         <!--Quản lý hội thoại-->
         <menuitem id="conversation_menu" name="Quản lý hội thoại" sequence="20"/>
