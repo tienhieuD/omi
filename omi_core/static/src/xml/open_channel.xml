@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-extend="FormView.buttons">
+        <t t-jquery="div.o_form_buttons_view" t-operation="append">
+            <button type="button" class="btn btn-default btn-sm o_hidden f_button_open_channel">
+                <span>Mở hội thoại <i class="fa fa-columns"/></span>
+            </button>
+        </t>
+    </t>
+
+</templates>

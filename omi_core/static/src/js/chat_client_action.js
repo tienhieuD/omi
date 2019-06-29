@@ -5,6 +5,25 @@ odoo.define('omi_core.chat_client_action', function (require) {
     var ChatAction = require('mail.chat_client_action');
     var KanbanRecord = require('web.KanbanRecord');
     var chat_manager = require('mail.chat_manager');
+    var FormController = require('web.FormController');
+    var chat_manager = require('mail.chat_manager');
+
+    FormController.include({
+        renderButtons: function($node) {
+            var self = this;
+            var res = this._super.apply(this, arguments);
+            if (self.modelName === 'mail.channel') {
+                self.$buttons.find('.f_button_open_channel').removeClass('o_hidden');
+            }
+            if (this.$buttons) {
+                this.$buttons.on('click', '.f_button_open_channel', function (e) {
+                    var channel = chat_manager.get_channel(28);
+                    chat_manager.open_channel(channel);
+                });
+            }
+            return res;
+        },
+    });
 
     var ChatStatusBar = Widget.extend({
         template: 'omi_core.chat_status_bar',
