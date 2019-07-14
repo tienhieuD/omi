@@ -106,7 +106,7 @@
         <main>
             <ul class="omi_order_list">
                 <li t-foreach="widget.data" t-as="quick_reply_template">
-                    <a class="omi_order_item bl0 js_record_item" t-att-data-id="quick_reply_template.id" data-model="omi.quick.reply" href="#" t-att-title="quick_reply_template.reply_content">
+                    <a class="omi_order_item bl0 js_record_item_tmpl" t-att-data-id="quick_reply_template.id" t-att-data-content="quick_reply_template.reply_content" data-model="omi.quick.reply" href="#" t-att-title="quick_reply_template.reply_content">
                         <div class="oi_left_side w0">
                             <i class="fa fa-commenting-o" aria-hidden="true"></i>
                         </div>

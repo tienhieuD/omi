@@ -142,8 +142,14 @@ odoo.define('omi_core.chat_client_action', function (require) {
             'click .js_button_header': '_onClickButtonHeader',
             'keyup .js_omi_search': '_onKeyupSearch',
             'click .js_mark_as_unread': '_mark_as_unread',
+            'click .js_record_item_tmpl': '_send_template_msg',
         }),
 
+        _send_template_msg: function (e) {
+            e.preventDefault();
+            var content = $(e.currentTarget).data('content');
+            $('.o_input.o_composer_text_field').val(content);
+        },
         _mark_as_unread: function(e) {
             if (typeof(this.channel.id) === "string") {
                 alert("There is not fb channel.");
