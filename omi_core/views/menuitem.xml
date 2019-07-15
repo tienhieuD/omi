@@ -52,7 +52,7 @@
                 <menuitem id="omi_product4_menu" name="Giá trị thuộc tính" action="product.variants_action" parent="omi_catelog_menu" sequence="20"/>
                 <menuitem id="omi_product5_menu" name="Danh mục sản phẩm" action="product.product_category_action_form" parent="omi_catelog_menu" sequence="20"/>
 
-        <menuitem id="rp_menu1" name="Báo cáo thống kê" action="omi_sale_report_act1" sequence="50"/>
+        <menuitem id="rp_menu1" name="Báo cáo thống kê" action="omi_sale_report_act1" groups="omi_core.fb_admin" sequence="50"/>
             <menuitem id="rp_menu2" name="Doanh thu" parent="rp_menu1" action="omi_sale_report_act1" sequence="10"/>
                 <menuitem id="rp_menu3" name="Theo nhân viên" parent="rp_menu2" action="omi_sale_report_act1" sequence="10"/>
                 <menuitem id="rp_menu4" name="Theo thời gian" parent="rp_menu2" action="omi_sale_report_act2" sequence="20"/>

@@ -1,5 +1,5 @@
 import json
-
+import re
 from odoo import http
 from odoo.http import request
 from odoo.addons.auth_oauth.controllers.main import fragment_to_query_string
@@ -9,9 +9,31 @@ _logger = logging.getLogger(__name__)
 
 ACCESS_TOKEN = '1234567890qwertyuiopasdfghjklzxcvbnm'
 VERIFY_TOKEN = '1234567890qwertyuiopasdfghjklzxcvbnm'
-
+PRODUCT_INFO = None
 
 class OMICore(http.Controller):
+
+    def need_to_reply_automaticly(self, message_text):
+        global PRODUCT_INFO
+        rep_msg = ''
+
+        if not PRODUCT_INFO:
+            PRODUCT_INFO = request.env['product.template'].sudo().search([])
+        product_code = PRODUCT_INFO.mapped('default_code')
+        message_split = message_text.split()
+        for word in message_split:
+            if word in product_code:
+                product = PRODUCT_INFO.filtered(lambda r: r.default_code == word)
+                rep_msg = """Có phải ý bạn là sản phẩm mã [%s], sản phẩm '%s' có giá bán %s đồng bạn nhé! Hiện tại bên mình %s, mong bạn đợi chút nhân viên hỗ trợ ạ!""" % (
+                    product.default_code,
+                    product.name,
+                    product.list_price,
+                    product.qty_available > 0 and 'còn hàng bạn nhé' or 'hết hàng rồi ạ')
+            if re.match('^0\d{8}\d$', word):
+                rep_msg += "Cảm ơn bạn đã để lại số điện thoại %s, mình sẽ liên hệ lại!" % word
+                break
+
+        return rep_msg
 
     def _show_message(self, sender_id, recipient_id, message_data):
         partner = request.env['res.partner'].sudo().get_partner_from_psid(psid=sender_id, page_id=recipient_id)
@@ -24,7 +46,15 @@ class OMICore(http.Controller):
             .message_post(author_id=partner.id, email_from=False, body=message_text, message_type='comment',
                           subtype='mail.mt_comment', content_subtype='plaintext')
 
+
         _logger.info("Sender(%s) PageID(%s) Message(%s)" % (sender_id, recipient_id, message_data))
+
+        message_reponse = self.need_to_reply_automaticly(message_text)
+        if message_reponse:
+            message = channel.sudo() \
+                .with_context(mail_create_nosubscribe=True) \
+                .message_post(author_id=3, email_from=False, body=message_reponse, message_type='comment',
+                              subtype='mail.mt_comment', content_subtype='plaintext')
         return message.id
 
     @http.route('/config-save-token', type='http', auth="user", website=True)

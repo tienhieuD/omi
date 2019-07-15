@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="fb_categ" model="ir.module.category">
+            <field name="name">Omi Facebook Group</field>
+            <field name="sequence" eval="100"/>
+        </record>
+
+        <record id="fb_admin" model="res.groups">
+            <field name="name">Omi Admin</field>
+            <field name="category_id" ref="omi_core.fb_categ"/>
+        </record>
+
+        <record id="fb_user" model="res.groups">
+            <field name="name">Omi User</field>
+            <field name="category_id" ref="omi_core.fb_categ"/>
+        </record>
+
+    </data>
+</odoo>

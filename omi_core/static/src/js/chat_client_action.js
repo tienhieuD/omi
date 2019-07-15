@@ -17,7 +17,7 @@ odoo.define('omi_core.chat_client_action', function (require) {
             }
             if (this.$buttons) {
                 this.$buttons.on('click', '.f_button_open_channel', function (e) {
-                    var channel = chat_manager.get_channel(28);
+                    var channel = chat_manager.get_channel(self.renderer.state.res_id);
                     chat_manager.open_channel(channel);
                 });
             }

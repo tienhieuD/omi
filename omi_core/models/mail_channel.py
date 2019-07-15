@@ -1,5 +1,6 @@
 from odoo import api, fields, models
 from odoo.tools import html2plaintext
+import random
 
 
 class MailChannel(models.Model):
@@ -34,6 +35,23 @@ class MailChannel(models.Model):
         return self.mapped('channel_partner_ids')
 
     @api.model
+    def get_online_reply_partner_id(self):
+        """Khi nhận tin nhắn or comment, chọn ramdom tài khoản reply để thêm vào kênh, ưu tiên người online"""
+        facebook_group_reply = self.env.ref("omi_core.fb_user")
+        users = facebook_group_reply.users
+        if not users:
+            return 3
+        users_reply = users.mapped('partner_id')
+        online_users = users.filtered(lambda u: u.im_status == 'online')
+        online_partner = online_users.mapped('partner_id')
+        if not online_partner:
+            partner_id = random.choice(users_reply.ids)
+            return partner_id
+        else:
+            partner_id = random.choice(online_partner.ids)
+            return partner_id
+
+    @api.model
     def get_channel_from_author(self, partner_id, force_create=True):
         """ Tìm kênh chát của người dùng facebook, nếu chưa có tạo mới một cái """
         self = self.sudo()
@@ -43,8 +61,9 @@ class MailChannel(models.Model):
         ], limit=1)
         if not channel and force_create:
             # TODO: Mặc định đang lấy partner gửi tin đến và Admin root (ID 3)
+            replier = self.get_online_reply_partner_id()
             channel = self.with_context(mail_create_nosubscribe=False).create({
-                'channel_partner_ids': [(6, 0, [partner_id, 3])],
+                'channel_partner_ids': [(6, 0, [partner_id, replier])],
                 'channel_type': 'fb',
                 'name': self.env['res.partner'].browse(partner_id).display_name,
                 'public': 'private',
